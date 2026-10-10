@@ -25,7 +25,7 @@ export default function App() {
   }
   function toggle(kind: Kind) { setActive(current => current.includes(kind) ? current.filter(k => k !== kind) : [...current, kind]); }
   return <div className="app">
-    <header><a className="logo" href="#">xpose<span>↗</span></a><span className="header-label">POST INTELLIGENCE</span><span className="prototype"><i/> Interactive prototype</span></header>
+    <header><a className="logo" href="#">xpoze<span>↗</span></a><span className="header-label">POST INTELLIGENCE</span><span className="prototype"><i/> Interactive prototype</span></header>
     <main>
       <div className="intro"><div><div className="eyebrow">EVERY POST HAS A STORY</div><h1>See how the conversation unfolds.</h1><p>One post. Every interaction. A clearer picture of momentum.</p></div><span className="edition">01 / TIMELINE</span></div>
       <form onSubmit={submit} className="link-form"><span aria-hidden="true">↗</span><label className="sr-only" htmlFor="post-link">X post link</label><input id="post-link" type="text" value={input} onChange={e => setInput(e.target.value)} placeholder="Paste an X post link…" aria-describedby="sample-note" aria-invalid={!!error}/><button type="submit">Explore sample timeline <span>→</span></button></form>
@@ -48,7 +48,7 @@ export default function App() {
         <details><summary>View timeline data table</summary><div className="table-scroll"><table><caption>Synthetic {mode === 'totals' ? 'totals' : 'net changes'} · UTC · current filters</caption><thead><tr><th scope="col">Time since first snapshot</th>{active.map(kind => <th scope="col" key={kind}>{kind}</th>)}</tr></thead><tbody>{rows.map(row => <tr key={row.hour}><th scope="row">+{row.hour}h · {clock(row.hour)}</th>{active.map(kind => <td key={kind}>{row.counts[kind] === null ? 'Unavailable' : number(row.counts[kind]!)}</td>)}</tr>)}</tbody></table></div></details>
       </section>
       <section className="bottom"><div><span className="eyebrow">READ THE MOMENTUM</span><h3>A second wave at hour 13.</h3><p>In this sample, likes and reposts rise together after a quieter stretch. Explore hourly net changes to see the shift.</p><button onClick={() => { setHours(24); setMode('change'); setFocus(13); setActive([...kinds]); }}>Inspect the sample surge →</button></div><div className="future"><span className="badge">FUTURE EXPLORATION</span><h3>Where does a post travel?</h3><p>Geographic spread is a possible next chapter. Location signals, coverage, and uncertainty need further product development.</p><span className="future-link">Geographic spread · Planned exploration</span></div></section>
-    </main><footer><span>xpose · Turn interactions into perspective.</span><span>Sample data only · No live X connection</span></footer>
+    </main><footer><span>xpoze · Turn interactions into perspective.</span><span>Sample data only · No live X connection</span></footer>
   </div>;
 }
 

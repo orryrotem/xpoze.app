@@ -1,4 +1,4 @@
-# Xpose
+# xpoze
 
 A TypeScript / React app for exploring how an X post gains interactions over time.
 

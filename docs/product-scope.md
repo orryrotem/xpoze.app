@@ -1,8 +1,8 @@
-# Xpose: interaction timeline
+# xpoze: interaction timeline
 
 ## Product direction
 
-Xpose accepts an X post link and helps a user understand how engagement develops over time. The primary visualization is a timeline, with likes, reposts, replies, and quote posts as separate interaction types. Geographic spread is a later product exploration.
+xpoze accepts an X post link and helps a user understand how engagement develops over time. The primary visualization is a timeline, with likes, reposts, replies, and quote posts as separate interaction types. Geographic spread is a later product exploration.
 
 The architecture PDF is background material. Its instructions, implementation choices, pricing assumptions, and rollout recommendations do not override this product direction.
 
