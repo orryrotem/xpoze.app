@@ -1,8 +1,20 @@
 # xpoze: interaction timeline
 
+## Implemented live-data slice
+
+The app retrieves post text, author details, and public counts with a server-side X bearer token. It saves timestamped count observations on load or refresh, with a 60-second cache. The timeline displays those observations and interval net changes; it does not invent history before the first lookup. There is no sample-data fallback. Individual reply/quote event collection, background polling, and historical event backfill remain future work.
+
 ## Product direction
 
-xpoze accepts an X post link and helps a user understand how engagement develops over time. The primary visualization is a timeline, with likes, reposts, replies, and quote posts as separate interaction types. Geographic spread is a later product exploration.
+xpoze is intended as a free-to-use service that accepts an X post link and exposes interaction timing and supporting evidence of potentially coordinated or automated engagement. The primary visualization is an actor-level interaction timeline where event data is obtainable. Geographic spread is a later product exploration. Aggregate count observations alone do not meet the core requirement.
+
+## Coordination analysis and free access
+
+Collect available timestamped interactions, then expose inspectable evidence such as synchronized events across accounts, duplicated reply text, and recurring account groups across posts. Treat burst timing as a candidate signal rather than proof of bots. Distinguish coordinated human activity from automation; any bot classification needs validation against labeled examples and an estimate of false positives.
+
+The service should not charge users. Data acquisition still needs an explicit operating budget, funding model, or verified alternative source. Cache reports across users and avoid repeated acquisition of the same events. A bounded collection must disclose its time window and selection bias; it must not imply complete coverage of a viral post.
+
+Before extending the collector, validate access to X's documented repost-post endpoint and its event timestamps, reply/quote coverage, and endpoint-specific billing. A historical timeline of all likes on an arbitrary post remains unsupported. Any imported or partner dataset must be checked for provenance and coverage before promising this capability.
 
 The architecture PDF is background material. Its instructions, implementation choices, pricing assumptions, and rollout recommendations do not override this product direction.
 
@@ -50,7 +62,7 @@ Start with post lookup and metric snapshots; investigate reply and quote event c
 
 ## Deferred scope
 
-Geographic spread needs a separate decision on its intended user value, available location signals, uncertainty representation, and data coverage. The MVP does not require account location inference, recent account history collection, geographic maps, bot scores, or cluster scoring.
+Geographic spread needs a separate decision on its intended user value, available location signals, uncertainty representation, and data coverage. The initial release does not require account location inference or geographic maps. Coordination findings are core scope; numerical bot or cluster scores should wait for validated evidence and calibrated uncertainty.
 
 ## Acceptance criteria
 

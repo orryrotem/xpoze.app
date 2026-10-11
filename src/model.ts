@@ -9,14 +9,16 @@ export function parsePostUrl(value: string): { id: string; url: string } | null 
     return match ? { id: match[1], url: `https://x.com/i/web/status/${match[1]}` } : null;
   } catch { return null; }
 }
-export type Snapshot = { hour: number; counts: Record<Kind, number> };
-// Deliberately synthetic snapshots, fixed so comparisons remain reproducible.
-export const snapshots: Snapshot[] = Array.from({ length: 25 }, (_, hour) => ({ hour, counts: {
-  Likes: Math.round(1120 + 6800 * (1 - Math.exp(-hour / 8)) + 2800 / (1 + Math.exp(-(hour - 13)))),
-  Reposts: Math.round(180 + 1500 * (1 - Math.exp(-hour / 7)) + 850 / (1 + Math.exp(-(hour - 13)))),
-  Replies: Math.round(70 + 610 * (1 - Math.exp(-hour / 10)) + 380 / (1 + Math.exp(-(hour - 14)))),
-  Quotes: Math.round(25 + 235 * (1 - Math.exp(-hour / 8)) + 180 / (1 + Math.exp(-(hour - 12))))
-} }));
-export function chartRows(hours: number, mode: 'totals' | 'change') {
-  return snapshots.slice(0, hours + 1).map((row, index) => ({ hour: row.hour, counts: Object.fromEntries(kinds.map(kind => [kind, mode === 'totals' ? row.counts[kind] : index === 0 ? null : row.counts[kind] - snapshots[index - 1].counts[kind]])) as Record<Kind, number | null> }));
+export type Snapshot = { observedAt: string; counts: Record<Kind, number | null> };
+export type PostData = {
+  post: { id: string; url: string; text: string; createdAt: string | null; author: { name: string; username: string } | null };
+  snapshots: Snapshot[];
+  cached: boolean;
+  nextRefreshAt: string;
+};
+export function chartRows(snapshots: Snapshot[], mode: 'totals' | 'change') {
+  return snapshots.map((row, index) => ({ observedAt: row.observedAt, counts: Object.fromEntries(kinds.map(kind => {
+    const previous = snapshots[index - 1]?.counts[kind];
+    return [kind, mode === 'totals' ? row.counts[kind] : previous == null || row.counts[kind] == null ? null : row.counts[kind]! - previous];
+  })) as Record<Kind, number | null> }));
 }
